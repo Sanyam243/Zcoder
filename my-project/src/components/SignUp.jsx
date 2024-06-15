@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
+import {  toast } from 'react-toastify';
 
 const SignUp = () => {
 
@@ -30,9 +31,10 @@ const SignUp = () => {
          
         // history.push('/home');
           if (!response.ok) {
+            toast.error("Invalid credentials")
             const errorData = await response.json();
             console.error("Error:", errorData);
-            alert("Invalid credentials")
+           
           } else {
             const data = await response.json();
             console.log(data);
@@ -40,13 +42,17 @@ const SignUp = () => {
             console.log(data.user.first_name)
             localStorage.setItem('user', JSON.stringify(data.user));
             localStorage.setItem('success',"true")
-            alert("Login successful")
+            toast.success("Login successful")
+            const Profile = data.user;
+            console.log(Profile)
             
-            navigateTo('/')
+            navigateTo('/',{state:{Profile:Profile}})
              // Uncomment this to navigate to home after successful registration
           }
         } catch (error) {
+          toast.error("Invalid credentials")
           console.error("Fetch error:", error);
+         
         }
       };
 
@@ -90,11 +96,11 @@ const SignUp = () => {
                             <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
                           </div>
                       </div>
-                      <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+                      <a href="/editprofile" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                   </div>
                   <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                      Don’t have an account yet? <a href="/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                   </p>
               </form>
           </div>

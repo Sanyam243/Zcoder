@@ -33,6 +33,11 @@ const userSchema = new mongoose.Schema({
   profile_image: {
     type: String
   },
+  userhandle: {
+    type: String,
+    unique: true,
+   required: true,
+  },
   password: {
     type: String,
     required: true
@@ -40,7 +45,12 @@ const userSchema = new mongoose.Schema({
   bookmark: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Question'
-}]
+}],
+handles: {
+  type: Map,
+  of: String,
+},
+following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
 const User = new mongoose.model('User', userSchema);

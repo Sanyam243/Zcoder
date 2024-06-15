@@ -1,5 +1,7 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {  toast } from 'react-toastify';
 
 
 
@@ -12,7 +14,8 @@ const Register = () => {
     password: '',
     city: '',
     college: '',
-    profile_image: null
+    profile_image: null,
+    userhandle: ''
   });
 
   const handleSubmit = async (e) => {
@@ -25,6 +28,8 @@ const Register = () => {
     formData.append('city', credentials.city);
     formData.append('college', credentials.college);
     formData.append('profile_image', credentials.profile_image);
+    formData.append('userhandle', credentials.userhandle);
+    console.log(credentials);
 
     try {
       const response = await fetch("http://localhost:3000/register", {
@@ -35,13 +40,14 @@ const Register = () => {
     // history.push('/home');
       if (!response.ok) {
         
-        alert("Invalid credentials")
+        toast.error("Invalid credentials")
 
         navigateTo('/')
       } else {
         const data = await response.json();
         console.log(data);
-        navigateTo('/login')
+        toast.success("Registration successful")
+        navigateTo('/')
          // Uncomment this to navigate to home after successful registration
       }
     } catch (error) {
@@ -85,7 +91,10 @@ const Register = () => {
                     <input type="text" name="last_name" className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800" placeholder="Last Name" value={credentials.last_name} onChange={onChange}required />
                   </div>
                 </div>
-
+                <div className="w-full mb-4 lg:mt-6">
+                    <label htmlFor="last_name" className="dark:text-gray-300">User handle</label>
+                    <input type="text" name="userhandle" className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800" placeholder="UserHandle" value={credentials.userhandle} onChange={onChange}required />
+                  </div>
                 <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
                   <div className="w-full mb-4 mt-6">
                     <label htmlFor="email" className="mb-2 dark:text-gray-300">Email</label>

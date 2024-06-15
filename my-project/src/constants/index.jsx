@@ -24,9 +24,9 @@ export const navItems = [
   { label: "Features", href: "#" },
   { label: "BookMark ", href: "/bookmark" },
   { label: "Discuss", href: "#" },
-  { label: "Testimonials", href: "#"
+ 
 
-   },
+   
 ];
 
 export const testimonials = [
